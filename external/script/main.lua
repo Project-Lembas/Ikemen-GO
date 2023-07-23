@@ -1498,7 +1498,7 @@ function main.f_commandLine()
 	end
 	local winner, t_gameStats = game()
 	if main.flags['-log'] ~= nil then
-		main.f_printTable(t_gameStats, main.flags['-log'])
+		main.f_fileWrite(main.flags['-log'], json.encode(t_gameStats, {indent = 2}))
 	end
 	os.exit()
 end
