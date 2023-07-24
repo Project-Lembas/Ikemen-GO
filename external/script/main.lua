@@ -1462,9 +1462,9 @@ function main.f_commandLine()
 			panicError("\nUnable to add character. No such file or directory: " .. v.character .. "\n")
 		end
 		selectChar(v.player, main.t_charDef[v.character:lower()], v.pal)
-		setCom(v.num, v.ai)
+		setCom(v.num, 8)
 		remapInput(v.num, v.input)
-		overrideCharData(v.player, math.ceil(v.num / 2), v.override)
+		--overrideCharData(v.player, math.ceil(v.num / 2), v.override)
 		if start ~= nil then
 			if start.p[v.player].t_selected == nil then
 				start.p[v.player].t_selected = {}
