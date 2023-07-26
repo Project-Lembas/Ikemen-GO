@@ -139,18 +139,22 @@ func OnTextEntered(s string) {
 
 func JoystickState(joy, button int) bool {
 	if joy < 0 {
-		return sys.keyState[Key(button)]
+		return sys.keyState[Key(IntToKey(button))]
 	}
 	if joy >= input.GetMaxJoystickCount() {
 		return false
 	}
 	if button >= 0 {
 		// Query button state
-		btns := input.GetJoystickButtons(joy)
-		if button >= len(btns) {
-			return false
-		}
-		return btns[button] != 0
+		// TODO: fix this lol?
+		/*
+			btns := input.GetJoystickButtons(joy)
+			if button >= len(btns) {
+				return false
+			}
+			return btns[button] != 0
+		*/
+		return false
 	} else {
 		// Query axis state
 		axis := -button - 1

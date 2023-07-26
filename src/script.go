@@ -1354,8 +1354,9 @@ func systemScriptInit(l *lua.LState) {
 		}
 		for joy = min; joy < max; joy++ {
 			if input.IsJoystickPresent(joy) {
+				// TODO: fix this?
 				axes := input.GetJoystickAxes(joy)
-				btns := input.GetJoystickButtons(joy)
+				//btns := input.GetJoystickButtons(joy)
 				name := input.GetJoystickName(joy)
 				for i := range axes {
 					if strings.Contains(name, "XInput") || strings.Contains(name, "X360") {
@@ -1383,11 +1384,11 @@ func systemScriptInit(l *lua.LState) {
 						}
 					}
 				}
-				for i := range btns {
-					if btns[i] > 0 {
-						s = strconv.Itoa(i)
-					}
-				}
+				//for i := range btns {
+				//	if btns[i] > 0 {
+				//		s = strconv.Itoa(i)
+				//	}
+				//}
 				if s != "" {
 					break
 				}
@@ -1921,7 +1922,7 @@ func systemScriptInit(l *lua.LState) {
 		}
 		tableArg(l, 3).ForEach(func(key, value lua.LValue) {
 			if joy == -1 {
-				btn := int(StringToKey(lua.LVAsString(value)))
+				btn := int(KeyToInt(StringToKey(lua.LVAsString(value))))
 				switch int(lua.LVAsNumber(key)) {
 				case 1:
 					sys.keyConfig[pn-1].dU = btn

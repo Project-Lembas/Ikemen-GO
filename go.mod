@@ -4,10 +4,11 @@ go 1.20
 
 require (
 	github.com/flopp/go-findfont v0.1.0
-	github.com/fyne-io/gl-js v0.0.0-20220802150000-8e339395f381
-	github.com/fyne-io/glfw-js v0.0.0-20220517201726-bebc2019cd33
-	github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6
-	github.com/go-gl/mathgl v1.0.0
+	//github.com/fyne-io/gl-js v0.0.0-20220802150000-8e339395f381
+	//github.com/fyne-io/glfw-js v0.0.0-20220517201726-bebc2019cd33
+	//github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6
+	//github.com/go-gl/mathgl v1.0.0
+	github.com/veandco/go-sdl2 v0.4.35
 	github.com/ikemen-engine/glfont v0.0.0-20230122001504-a74730561e23
 	github.com/samhocevar/beep v1.1.1-0.20230406132407-3fba40ddabcc
 	github.com/sqweek/dialog v0.0.0-20220809060634-e981b270ebbf
@@ -17,7 +18,7 @@ require (
 
 require (
 	github.com/TheTitanrain/w32 v0.0.0-20180517000239-4f5cfb03fabf // indirect
-	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20211213063430-748e38ca8aec // indirect
+	//github.com/go-gl/glfw/v3.3/glfw v0.0.0-20211213063430-748e38ca8aec // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20211219123610-ec9572f70e60 // indirect
 	github.com/hajimehoshi/go-mp3 v0.3.0 // indirect

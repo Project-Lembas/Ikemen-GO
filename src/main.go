@@ -389,7 +389,7 @@ func setupConfig() configSettings {
 	sys.windowTitle = tmp.WindowTitle
 	sys.xinputTriggerSensitivity = tmp.XinputTriggerSensitivity
 	stoki := func(key string) int {
-		return int(StringToKey(key))
+		return int(KeyToInt(StringToKey(key)))
 	}
 	Atoi := func(key string) int {
 		if i, err := strconv.Atoi(key); err == nil {
