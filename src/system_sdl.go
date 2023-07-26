@@ -1,80 +1,87 @@
 package main
 
 import (
+	"fmt"
 	"image"
+
+	sdl "github.com/veandco/go-sdl2/sdl"
 )
 
 type Window struct {
-	//*glfw.Window
+	*sdl.Window
 	title      string
 	fullscreen bool
 	x, y, w, h int
 }
 
 func (s *System) newWindow(w, h int) (*Window, error) {
-	/*
-		var err error
-		var window *glfw.Window
-		var monitor *glfw.Monitor
+	var err error
+	var window *sdl.Window
+	//var monitor *sdl.Monitor
 
-		// Initialize OpenGL
-		chk(glfw.Init(gl.ContextWatcher))
+	// Initialize OpenGL
+	chk(sdl.Init(sdl.INIT_EVERYTHING))
 
-		if monitor = glfw.GetPrimaryMonitor(); monitor == nil {
-			return nil, fmt.Errorf("failed to obtain primary monitor")
+	//if monitor = glfw.GetPrimaryMonitor(); monitor == nil {
+	//	return nil, fmt.Errorf("failed to obtain primary monitor")
+	//}
+
+	var mode, _ = window.GetDisplayMode()
+	var x, y = (int(mode.W) - w) / 2, (int(mode.H) - h) / 2
+
+	// "-windowed" overrides the configuration setting but does not change it
+	_, forceWindowed := sys.cmdFlags["-windowed"]
+	fullscreen := s.fullscreen && !forceWindowed
+
+	//glfw.WindowHint(glfw.Resizable, glfw.False)
+	//glfw.WindowHint(glfw.ContextVersionMajor, 2)
+	//glfw.WindowHint(glfw.ContextVersionMinor, 1)
+
+	// Create main window.
+	// NOTE: Borderless fullscreen is in reality just a window without borders.
+	if fullscreen && !s.borderless {
+		window, err = sdl.CreateWindow(s.windowTitle, 0, 0, int32(w), int32(y), sdl.WINDOW_RESIZABLE|sdl.WINDOW_SHOWN)
+		//window, err = glfw.CreateWindow(w, h, s.windowTitle, monitor, nil)
+	} else {
+		window, err = sdl.CreateWindow(s.windowTitle, 0, 0, int32(w), int32(y), sdl.WINDOW_RESIZABLE|sdl.WINDOW_SHOWN)
+		//window, err = glfw.CreateWindow(w, h, s.windowTitle, nil, nil)
+	}
+	if err != nil {
+		return nil, fmt.Errorf("failed to create window: %w", err)
+	}
+
+	// Set windows attributes
+	if fullscreen {
+		window.SetPosition(0, 0)
+		if s.borderless {
+			window.SetBordered(false)
+			window.SetSize(mode.W, mode.H)
 		}
-
-		var mode = monitor.GetVideoMode()
-		var x, y = (mode.Width - w) / 2, (mode.Height - h) / 2
-
-		// "-windowed" overrides the configuration setting but does not change it
-		_, forceWindowed := sys.cmdFlags["-windowed"]
-		fullscreen := s.fullscreen && !forceWindowed
-
-		glfw.WindowHint(glfw.Resizable, glfw.False)
-		glfw.WindowHint(glfw.ContextVersionMajor, 2)
-		glfw.WindowHint(glfw.ContextVersionMinor, 1)
-
-		// Create main window.
-		// NOTE: Borderless fullscreen is in reality just a window without borders.
-		if fullscreen && !s.borderless {
-			window, err = glfw.CreateWindow(w, h, s.windowTitle, monitor, nil)
-		} else {
-			window, err = glfw.CreateWindow(w, h, s.windowTitle, nil, nil)
+		//TODO: hide cursor
+		//window.SetInputMode(glfw.CursorMode, glfw.CursorHidden)
+	} else {
+		window.SetSize(int32(w), int32(h))
+		//TODO: unhide cursor
+		//window.SetInputMode(glfw.CursorMode, glfw.CursorNormal)
+		if s.windowCentered {
+			window.SetPosition(int32(x), int32(y))
 		}
-		if err != nil {
-			return nil, fmt.Errorf("failed to create window: %w", err)
-		}
+	}
 
-		// Set windows attributes
-		if fullscreen {
-			window.SetPos(0, 0)
-			if s.borderless {
-				window.SetAttrib(glfw.Decorated, 0)
-				window.SetSize(mode.Width, mode.Height)
-			}
-			window.SetInputMode(glfw.CursorMode, glfw.CursorHidden)
-		} else {
-			window.SetSize(w, h)
-			window.SetInputMode(glfw.CursorMode, glfw.CursorNormal)
-			if s.windowCentered {
-				window.SetPos(x, y)
-			}
-		}
+	//TODO: Figure out the callbacks here
+	//window.MakeContextCurrent()
+	//window.SetKeyCallback(keyCallback)
+	//window.SetCharModsCallback(charCallback)
 
-		window.MakeContextCurrent()
-		window.SetKeyCallback(keyCallback)
-		window.SetCharModsCallback(charCallback)
+	//TODO: Does this even matter without gl?
+	// V-Sync
+	//if s.vRetrace >= 0 {
+	//	glfw.SwapInterval(s.vRetrace)
+	//}
 
-		// V-Sync
-		if s.vRetrace >= 0 {
-			glfw.SwapInterval(s.vRetrace)
-		}
-
-		ret := &Window{window, s.windowTitle, fullscreen, x, y, w, h}
-		return ret, err
-	*/
-	return nil, nil
+	window.Show()
+	ret := &Window{window, s.windowTitle, fullscreen, x, y, w, h}
+	return ret, err
 }
 
 func (w *Window) SwapBuffers() {
@@ -90,8 +97,8 @@ func (w *Window) SetSwapInterval(interval int) {
 }
 
 func (w *Window) GetSize() (int, int) {
-	//return w.Window.GetSize()
-	return 0, 0
+	var wid, h = w.Window.GetSize()
+	return int(wid), int(h)
 }
 
 func (w *Window) GetClipboardString() (string, error) {
@@ -135,7 +142,7 @@ func (w *Window) shouldClose() bool {
 }
 
 func (w *Window) Close() {
-	//glfw.Terminate()
+	sdl.Quit()
 }
 
 /*

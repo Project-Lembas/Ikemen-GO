@@ -1,5 +1,7 @@
 package main
 
+var gfx = &Renderer{}
+
 type Matrix4 struct {
 }
 

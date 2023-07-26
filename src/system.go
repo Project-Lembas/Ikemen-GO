@@ -418,7 +418,7 @@ func (s *System) init(w, h int32) *lua.LState {
 	*/
 
 	// Now we proceed to init the render.
-	//gfx.Init()
+	gfx.Init(s.window)
 	//gfx.BeginFrame(false)
 	// And the audio.
 	speaker.Init(audioFrequency, audioOutLen)
